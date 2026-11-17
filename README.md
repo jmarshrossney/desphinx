@@ -1,10 +1,51 @@
 # desphinx
 
-Find and fix reStructuredText and Sphinx markup in Python docstrings and comments, for projects whose API reference is Markdown rendered by mkdocstrings (Zensical, MkDocs).
+`desphinx` finds and fixes reStructuredText and Sphinx markup in Python docstrings and comments, for projects whose API reference is Markdown rendered by mkdocstrings (Zensical, MkDocs).
 
-reST creeps into docstrings, mostly from coding agents and from code copied out of Sphinx-documented projects.
-mkdocstrings renders docstrings as Markdown, so most of that markup shows up verbatim in the API reference.
-Attribute comments (`#:`) are worse: griffe does not read them, so the documentation silently disappears.
+This exists because I got fed up with coding agents constantly reintroducing reST/Sphinx into docstrings, sometimes in spite of instructions to the contrary in `AGENTS.md`.
+
+Please see the [documentation](https://jmarshrossney.github.io/desphinx) for user instructions (also below) and an example.
+
+## Installation and usage
+
+### pre-commit
+
+```yaml
+- repo: https://github.com/jmarshrossney/desphinx
+  rev: <tag or commit>
+  hooks:
+    - id: desphinx
+      args: [--fix]
+```
+
+### Command line
+
+```sh
+uvx --from git+https://github.com/jmarshrossney/desphinx desphinx src tests
+```
+
+### CI
+
+Add it to the dev dependency group:
+
+```sh
+uv add --dev "desphinx @ git+https://github.com/jmarshrossney/desphinx"
+```
+
+and run it from the lint task, so commits made without the hook are caught too:
+
+```just
+lint-check:
+  desphinx src tests
+```
+
+### Output
+
+Each finding is printed as `path:line:column: CODE summary; use instead`.
+The exit status is 1 if anything was reported or rewritten.
+Directories are searched recursively, skipping hidden directories and `__pycache__`, `node_modules`, `site`, `build` and `dist`; `--exclude GLOB` skips more.
+
+`--fix` rewrites the markup that has a clear Markdown equivalent and reports the rest, with suggested replacements.
 
 ## Rules
 
@@ -24,69 +65,13 @@ A docstring is any statement that is a bare string literal, so attribute docstri
 Runtime strings such as error messages are never examined.
 Fenced code blocks and doctest lines inside docstrings are skipped.
 
-The rules without a fix need a person: a literal block needs a language for its fence, a directive needs choosing between an admonition and prose, and a public `#:` comment needs moving below the assignment and rewrapping.
-
-Replace `vX.Y.Z` with a [release](https://github.com/jmarshrossney/desphinx/releases) tag.
-
-## Usage
-
-As a pre-commit hook:
-
-```yaml
-- repo: https://github.com/jmarshrossney/desphinx
-  rev: <tag or commit>
-  hooks:
-    - id: desphinx
-      args: [--fix]
-```
-
-From the command line, without installing:
-
-```sh
-uvx --from git+https://github.com/jmarshrossney/desphinx desphinx src tests
-```
-
-In CI, add it to the dev dependency group and call it from the lint task:
-
-```sh
-uv add --dev "desphinx @ git+https://github.com/jmarshrossney/desphinx"
-```
-
-```just
-lint-check:
-  desphinx src tests
-```
-
-The exit status is 1 if anything was reported or rewritten, as for `ruff check --fix`.
-Directories are searched recursively, skipping hidden directories and `__pycache__`, `node_modules`, `site`, `build` and `dist`; `--exclude GLOB` skips more.
-
-## Why a standalone command with a pre-commit hook
-
-The checks started as a test in one project's suite, and the aim is to reuse them across projects that all document with Zensical.
-
-One package with a console script serves both places a check needs to run:
-
-- **At commit time**, as a pre-commit hook, which catches markup where it is written and can fix the mechanical cases there and then.
-- **In CI**, as a step in the lint task, because a hook alone is skipped by `--no-verify` and by clones without hooks installed, and not every project runs pre-commit in CI.
-
-It has no dependencies, so the hook installs quickly and `uvx` runs it without a project.
-A git source is also unaffected by `[tool.uv] exclude-newer`, so projects using that setting need no exemption.
-
-Alternatives considered:
-
-| Option | Why not |
-|---|---|
-| A ruff rule | Ruff has no plugin system, and no existing rule covers this. |
-| A pytest plugin or a copied test | Ties a lint check to the test suite, so failures arrive later than at commit time, and copies drift apart. |
-| A griffe extension, warning during the docs build | Only sees objects that are rendered, so it misses comments, tests, private code and examples, which is where the habit is picked up and imitated. |
-| pygrep hooks | Regular expressions over whole files cannot tell docstrings and comments from runtime strings, or skip fenced code. |
-
 ## Development
 
+Install the project and its development dependencies, then run the full check suite.
+
+```sh
+uv sync
+uv run just
+```
+
 See [CONTRIBUTING.md](CONTRIBUTING.md).
-In short: `uv sync`, then `uv run just`.
-
----
-
-Generated from a [Copier](https://copier.readthedocs.io/) template, recorded in `.copier-answers.yml`.
-Pull later template changes with `copier update`.
