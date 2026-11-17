@@ -63,7 +63,7 @@ docs-example:
 docs-serve: docs-example
   zensical serve
 
-# Tag the pyproject.toml version and publish it as a GitHub release and to PyPI.
+# Tag the pyproject.toml version and publish it as a GitHub release.
 [group('release')]
 release:
   #!/usr/bin/env bash

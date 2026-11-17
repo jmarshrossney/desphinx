@@ -26,6 +26,8 @@ Fenced code blocks and doctest lines inside docstrings are skipped.
 
 The rules without a fix need a person: a literal block needs a language for its fence, a directive needs choosing between an admonition and prose, and a public `#:` comment needs moving below the assignment and rewrapping.
 
+Replace `vX.Y.Z` with a [release](https://github.com/jmarshrossney/desphinx/releases) tag.
+
 ## Usage
 
 As a pre-commit hook:

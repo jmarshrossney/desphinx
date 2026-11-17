@@ -1,7 +1,7 @@
 name: docs
 
 on:
-  # Deploy on a stable release, so the site documents what PyPI serves rather
+  # Deploy on a stable release, so the site documents the latest release rather
   # than unreleased work on main. Pre-releases build but do not deploy.
   release:
     types: [published]
