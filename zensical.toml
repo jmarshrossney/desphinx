@@ -5,13 +5,13 @@ use_directory_urls = false
 # Raw files the home page includes as snippets, not pages.
 exclude_docs = "snippets/"
 
-site_name = "markdown-docstrings"
+site_name = "desphinx"
 site_description = "Catch reStructuredText and Sphinx markup in Python docstrings and comments, for projects documented with Markdown."
 site_author = "Joe Marsh Rossney"
-site_url = "https://jmarshrossney.github.io/markdown-docstrings"
+site_url = "https://jmarshrossney.github.io/desphinx"
 
-repo_name = "jmarshrossney/markdown-docstrings"
-repo_url = "https://github.com/jmarshrossney/markdown-docstrings"
+repo_name = "jmarshrossney/desphinx"
+repo_url = "https://github.com/jmarshrossney/desphinx"
 
 copyright = """
 Copyright &copy; 2026 Joe Marsh Rossney

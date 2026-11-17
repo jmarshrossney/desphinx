@@ -1,4 +1,4 @@
-# markdown-docstrings
+# desphinx
 
 Find and fix reStructuredText and Sphinx markup in Python docstrings and comments, for projects whose API reference is Markdown rendered by mkdocstrings (Zensical, MkDocs).
 
@@ -31,28 +31,28 @@ The rules without a fix need a person: a literal block needs a language for its 
 As a pre-commit hook:
 
 ```yaml
-- repo: https://github.com/jmarshrossney/markdown-docstrings
+- repo: https://github.com/jmarshrossney/desphinx
   rev: <tag or commit>
   hooks:
-    - id: markdown-docstrings
+    - id: desphinx
       args: [--fix]
 ```
 
 From the command line, without installing:
 
 ```sh
-uvx --from git+https://github.com/jmarshrossney/markdown-docstrings markdown-docstrings src tests
+uvx --from git+https://github.com/jmarshrossney/desphinx desphinx src tests
 ```
 
 In CI, add it to the dev dependency group and call it from the lint task:
 
 ```sh
-uv add --dev "markdown-docstrings @ git+https://github.com/jmarshrossney/markdown-docstrings"
+uv add --dev "desphinx @ git+https://github.com/jmarshrossney/desphinx"
 ```
 
 ```just
 lint-check:
-  markdown-docstrings src tests
+  desphinx src tests
 ```
 
 The exit status is 1 if anything was reported or rewritten, as for `ruff check --fix`.

@@ -22,7 +22,7 @@ or individually:
 
 | Command | What it does |
 |---|---|
-| `just lint` | `ruff format`, `markdown-docstrings --fix`, `ruff check --fix` |
+| `just lint` | `ruff format`, `desphinx --fix`, `ruff check --fix` |
 | `just lint-check` | Non-mutating variant, used by CI |
 | `just typecheck` | `pyright` |
 | `just test` | `pytest` |
@@ -44,7 +44,7 @@ pre-commit install
 
 The documentation is built with [Zensical](https://zensical.org/) from the Markdown in `docs/`, plus an API reference generated from docstrings by [mkdocstrings](https://mkdocstrings.github.io/).
 
-The example on the home page is produced by running `markdown-docstrings --fix` on `docs/snippets/before.py` when the docs are built (`just docs-example`).
+The example on the home page is produced by running `desphinx --fix` on `docs/snippets/before.py` when the docs are built (`just docs-example`).
 Edit `before.py` to change it; the fixed module and terminal output are generated, and gitignored.
 
 Preview the site locally with `just docs-serve`.

@@ -1,6 +1,6 @@
 """Command line interface.
 
-Run `markdown-docstrings PATH...` to report markup in the Python files under
+Run `desphinx PATH...` to report markup in the Python files under
 each path, or add `--fix` to rewrite what can be rewritten first. The exit
 status is 1 if anything was reported or rewritten, as for `ruff check --fix`.
 """
@@ -11,7 +11,7 @@ import sys
 from collections.abc import Iterable, Iterator, Sequence
 from pathlib import Path
 
-from markdown_docstrings.checker import RULES, check, fix
+from desphinx.checker import RULES, check, fix
 
 __all__ = ["main"]
 
@@ -36,7 +36,7 @@ def _python_files(paths: Iterable[Path], exclude: Sequence[str]) -> Iterator[Pat
 def _parser() -> argparse.ArgumentParser:
     rules = "\n".join(f"  {r.code}  {r.summary}" for r in RULES)
     parser = argparse.ArgumentParser(
-        prog="markdown-docstrings",
+        prog="desphinx",
         description="Find reStructuredText and Sphinx markup in Python docstrings "
         "and comments.",
         epilog=f"rules:\n{rules}",

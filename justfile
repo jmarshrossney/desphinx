@@ -6,14 +6,14 @@ _:
 [group('check')]
 lint:
   ruff format
-  markdown-docstrings --fix src tests
+  desphinx --fix src tests
   ruff check --fix
 
 # Variant of `lint` that doesn't cause any changes to files (for CI).
 [group('check')]
 lint-check:
   ruff format --check
-  markdown-docstrings src tests
+  desphinx src tests
   ruff check
 
 # Run static type checker.
@@ -29,19 +29,19 @@ test:
 # Run tests with coverage report.
 [group('test')]
 test-cov:
-  pytest --cov=markdown_docstrings --cov-report=term-missing --cov-fail-under=90
+  pytest --cov=desphinx --cov-report=term-missing --cov-fail-under=90
 
 # Run doctest examples embedded in source docstrings.
 [group('test')]
 doctest:
-  pytest --doctest-modules src/markdown_docstrings
+  pytest --doctest-modules src/desphinx
 
 # Run the example, then build the documentation using Zensical.
 [group('docs')]
 docs: docs-example
   zensical build
 
-# Run `markdown-docstrings --fix` on the example module, writing the fixed module
+# Run `desphinx --fix` on the example module, writing the fixed module
 # and the terminal session to docs/snippets/ for the home page to include.
 [group('docs')]
 docs-example:
@@ -53,8 +53,8 @@ docs-example:
   cp "$out/before.py" "$tmp/module.py"
   cd "$tmp"
   status=0
-  log=$(markdown-docstrings --fix module.py) || status=$?
-  printf '$ markdown-docstrings --fix module.py\n%s\n$ echo $?\n%s\n' "$log" "$status" \
+  log=$(desphinx --fix module.py) || status=$?
+  printf '$ desphinx --fix module.py\n%s\n$ echo $?\n%s\n' "$log" "$status" \
     > "$out/output.txt"
   cp module.py "$out/after.py"
 

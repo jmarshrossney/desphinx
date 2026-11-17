@@ -3,7 +3,7 @@ requires = ["uv_build>=0.12.13,<0.13.0"]
 build-backend = "uv_build"
 
 [project]
-name = "markdown-docstrings"
+name = "desphinx"
 version = "0.1.0.dev0"
 description = "Catch reStructuredText and Sphinx markup in Python docstrings and comments, for projects documented with Markdown."
 authors = [
@@ -25,12 +25,12 @@ classifiers = [
 ]
 
 [project.scripts]
-markdown-docstrings = "markdown_docstrings.cli:main"
+desphinx = "desphinx.cli:main"
 
 [project.urls]
-Homepage = "https://jmarshrossney.github.io/markdown-docstrings"
-Repository = "https://github.com/jmarshrossney/markdown-docstrings"
-Documentation = "https://jmarshrossney.github.io/markdown-docstrings"
+Homepage = "https://jmarshrossney.github.io/desphinx"
+Repository = "https://github.com/jmarshrossney/desphinx"
+Documentation = "https://jmarshrossney.github.io/desphinx"
 
 # These bounds are floors, not pins: `uv sync` already resolves to the newest
 # version each one allows, so raising them changes nothing for anyone. Do not

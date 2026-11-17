@@ -2,7 +2,7 @@ import textwrap
 
 import pytest
 
-from markdown_docstrings import RULES, check, fix
+from desphinx import RULES, check, fix
 
 
 def src(text: str) -> str:

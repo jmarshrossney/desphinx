@@ -6,10 +6,10 @@ author_email: 17361029+jmarshrossney@users.noreply.github.com
 author_name: Joe Marsh Rossney
 copyright_holder: Joe Marsh Rossney
 github_owner: jmarshrossney
-package_name: markdown_docstrings
+package_name: desphinx
 project_description: Catch reStructuredText and Sphinx markup in Python docstrings
     and comments, for projects documented with Markdown.
-project_name: markdown-docstrings
+project_name: desphinx
 with_cli: false
 with_license: true
 with_pypi: true

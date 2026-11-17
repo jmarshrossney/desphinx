@@ -145,6 +145,57 @@ wheels = [
 ]
 
 [[package]]
+name = "desphinx"
+version = "0.1.0.dev0"
+source = { editable = "." }
+
+[package.dev-dependencies]
+dev = [
+    { name = "coverage" },
+    { name = "mkdocstrings-python" },
+    { name = "pre-commit" },
+    { name = "pyright" },
+    { name = "pytest" },
+    { name = "pytest-cov" },
+    { name = "ruff" },
+    { name = "rust-just" },
+    { name = "zensical" },
+]
+docs = [
+    { name = "mkdocstrings-python" },
+    { name = "zensical" },
+]
+test = [
+    { name = "coverage" },
+    { name = "pytest" },
+    { name = "pytest-cov" },
+]
+
+[package.metadata]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "coverage", specifier = ">=7.15.2" },
+    { name = "mkdocstrings-python", specifier = ">=2.0.5" },
+    { name = "pre-commit", specifier = ">=4.6.1" },
+    { name = "pyright", specifier = ">=1.1.411" },
+    { name = "pytest", specifier = ">=9.1.1" },
+    { name = "pytest-cov", specifier = ">=7.1.0" },
+    { name = "ruff", specifier = ">=0.16.1" },
+    { name = "rust-just", specifier = ">=1.57.0" },
+    { name = "zensical", specifier = ">=0.0.52" },
+]
+docs = [
+    { name = "mkdocstrings-python", specifier = ">=2.0.5" },
+    { name = "zensical", specifier = ">=0.0.52" },
+]
+test = [
+    { name = "coverage", specifier = ">=7.15.2" },
+    { name = "pytest", specifier = ">=9.1.1" },
+    { name = "pytest-cov", specifier = ">=7.1.0" },
+]
+
+[[package]]
 name = "distlib"
 version = "0.4.4"
 source = { registry = "https://pypi.org/simple" }
@@ -220,57 +271,6 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/ca/eb/dc0fd6eff604bfb870b7fb68b90985a32caaf3c76f67736bbf7f438acd59/markdown-3.11.3.tar.gz", hash = "sha256:81eb91631dc97ad1efbc76019ef0f80fe90ca49ddf81546752d79989c3bfff3e", size = 498810, upload-time = "2026-11-05T20:30:52.926Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/81/6f/1fa8970e960e5c832874399e6efa564870ade8206d57fef5d5e296b834f5/markdown-3.11.3-py3-none-any.whl", hash = "sha256:e1a31a112232504d753e5c01bb8c2de90d3f0ba986b063e10770cf7695b09e73", size = 116758, upload-time = "2026-11-05T20:30:51.775Z" },
-]
-
-[[package]]
-name = "markdown-docstrings"
-version = "0.1.0.dev0"
-source = { editable = "." }
-
-[package.dev-dependencies]
-dev = [
-    { name = "coverage" },
-    { name = "mkdocstrings-python" },
-    { name = "pre-commit" },
-    { name = "pyright" },
-    { name = "pytest" },
-    { name = "pytest-cov" },
-    { name = "ruff" },
-    { name = "rust-just" },
-    { name = "zensical" },
-]
-docs = [
-    { name = "mkdocstrings-python" },
-    { name = "zensical" },
-]
-test = [
-    { name = "coverage" },
-    { name = "pytest" },
-    { name = "pytest-cov" },
-]
-
-[package.metadata]
-
-[package.metadata.requires-dev]
-dev = [
-    { name = "coverage", specifier = ">=7.15.2" },
-    { name = "mkdocstrings-python", specifier = ">=2.0.5" },
-    { name = "pre-commit", specifier = ">=4.6.1" },
-    { name = "pyright", specifier = ">=1.1.411" },
-    { name = "pytest", specifier = ">=9.1.1" },
-    { name = "pytest-cov", specifier = ">=7.1.0" },
-    { name = "ruff", specifier = ">=0.16.1" },
-    { name = "rust-just", specifier = ">=1.57.0" },
-    { name = "zensical", specifier = ">=0.0.52" },
-]
-docs = [
-    { name = "mkdocstrings-python", specifier = ">=2.0.5" },
-    { name = "zensical", specifier = ">=0.0.52" },
-]
-test = [
-    { name = "coverage", specifier = ">=7.15.2" },
-    { name = "pytest", specifier = ">=9.1.1" },
-    { name = "pytest-cov", specifier = ">=7.1.0" },
 ]
 
 [[package]]

@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from markdown_docstrings import RULES, check
+from desphinx import RULES, check
 
 BEFORE = Path(__file__).parent.parent / "docs" / "snippets" / "before.py"
 

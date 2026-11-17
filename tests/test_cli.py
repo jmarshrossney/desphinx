@@ -3,7 +3,7 @@ import sys
 
 import pytest
 
-from markdown_docstrings.cli import main
+from desphinx.cli import main
 
 
 @pytest.fixture
@@ -65,7 +65,7 @@ def test_invalid_python_is_skipped(tmp_path, capsys):
 
 def test_runs_as_a_module(tree):
     result = subprocess.run(
-        [sys.executable, "-m", "markdown_docstrings", str(tree / "pkg")],
+        [sys.executable, "-m", "desphinx", str(tree / "pkg")],
         capture_output=True,
         text=True,
         check=False,

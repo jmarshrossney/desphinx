@@ -27,9 +27,9 @@ repos:
   # working copy of the checker rather than a released one.
   - repo: local
     hooks:
-      - id: markdown-docstrings
-        name: markdown-docstrings
-        entry: uv run --frozen markdown-docstrings --fix
+      - id: desphinx
+        name: desphinx
+        entry: uv run --frozen desphinx --fix
         language: system
         types: [python]
         # The example's before and after files contain reST on purpose.

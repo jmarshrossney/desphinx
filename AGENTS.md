@@ -2,15 +2,15 @@
 
 ## Project overview
 
-`markdown-docstrings` finds and fixes reStructuredText and Sphinx markup in Python docstrings and comments, for projects whose API reference is Markdown rendered by mkdocstrings. `README.md` explains why it is a standalone command with a pre-commit hook.
+`desphinx` finds and fixes reStructuredText and Sphinx markup in Python docstrings and comments, for projects whose API reference is Markdown rendered by mkdocstrings. `README.md` explains why it is a standalone command with a pre-commit hook.
 
 ## Source layout
 
 ```
-src/markdown_docstrings/
+src/desphinx/
   checker.py       — the rules (`RULES`), `check` and `fix`; no dependencies
-  cli.py           — argparse entry point, `markdown-docstrings`
-  __main__.py      — `python -m markdown_docstrings`
+  cli.py           — argparse entry point, `desphinx`
+  __main__.py      — `python -m desphinx`
 tests/             — one test file per module, plus `test_readme.py`
 docs/              — index.md (introduction, usage, example) and reference.md (rules, API)
 docs/snippets/     — before.py; `just docs-example` writes after.py and output.txt beside it
@@ -24,7 +24,7 @@ docs/snippets/     — before.py; `just docs-example` writes after.py and output
 - `fix` rewrites only markup with exactly one Markdown equivalent. Anything needing a judgement (a fence language, where to move a docstring) is reported, never rewritten.
 - The rules table in `README.md` must list every rule in `RULES`, in order, with a matching fix column; `tests/test_readme.py` checks. `docs/reference.md` includes the same table through its snippet section markers, so it is written once.
 - `ruff format` rewrites Python code blocks in Markdown, which mangles snippet lines, so `docs/index.md` is excluded from formatting. `tests/test_docs.py` fails on a malformed or dangling snippet line.
-- The home page example is produced by running the CLI at docs build time: `just docs-example` runs `markdown-docstrings --fix` on a copy of `docs/snippets/before.py` and writes the fixed module and the terminal session beside it (gitignored), which `pymdownx.snippets` includes. `before.py` must trigger every rule (`tests/test_examples.py`). It contains reST on purpose, so it sits outside the paths the package checks itself on, and the local pre-commit hook excludes it.
+- The home page example is produced by running the CLI at docs build time: `just docs-example` runs `desphinx --fix` on a copy of `docs/snippets/before.py` and writes the fixed module and the terminal session beside it (gitignored), which `pymdownx.snippets` includes. `before.py` must trigger every rule (`tests/test_examples.py`). It contains reST on purpose, so it sits outside the paths the package checks itself on, and the local pre-commit hook excludes it.
 - The package checks itself: `just lint` and the local pre-commit hook run it over `src` and `tests`. Test fixtures that contain reST markup must therefore be runtime strings, not docstrings or comments.
 
 ## Commands
@@ -34,7 +34,7 @@ All via `just`, prefixed with `uv run` unless the virtual environment is activat
 | Command | What it does |
 |---|---|
 | `just` | lint → typecheck → test → docs, in order |
-| `just lint` | `ruff format` + `markdown-docstrings --fix` + `ruff check --fix` |
+| `just lint` | `ruff format` + `desphinx --fix` + `ruff check --fix` |
 | `just lint-check` | Non-mutating variant for CI |
 | `just typecheck` | `pyright` |
 | `just test` | `pytest` |

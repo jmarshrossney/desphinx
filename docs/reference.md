@@ -10,6 +10,6 @@ Fenced code blocks and doctest lines inside docstrings are skipped.
 
 ## API
 
-::: markdown_docstrings
+::: desphinx
     options:
       heading_level: 3

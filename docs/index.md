@@ -1,6 +1,6 @@
-# markdown-docstrings
+# desphinx
 
-`markdown-docstrings` finds and fixes reStructuredText and Sphinx markup in Python docstrings and comments, for projects whose API reference is Markdown rendered by mkdocstrings (Zensical, MkDocs).
+`desphinx` finds and fixes reStructuredText and Sphinx markup in Python docstrings and comments, for projects whose API reference is Markdown rendered by mkdocstrings (Zensical, MkDocs).
 
 This exists because I got fed up with coding agents constantly reintroducing reST/Sphinx into docstrings, sometimes in spite of instructions to the contrary in `AGENTS.md`.
 
@@ -9,17 +9,17 @@ This exists because I got fed up with coding agents constantly reintroducing reS
 === "pre-commit"
 
     ```yaml
-    - repo: https://github.com/jmarshrossney/markdown-docstrings
+    - repo: https://github.com/jmarshrossney/desphinx
       rev: <tag or commit>
       hooks:
-        - id: markdown-docstrings
+        - id: desphinx
           args: [--fix]
     ```
 
 === "Command line"
 
     ```sh
-    uvx --from git+https://github.com/jmarshrossney/markdown-docstrings markdown-docstrings src tests
+    uvx --from git+https://github.com/jmarshrossney/desphinx desphinx src tests
     ```
 
 === "CI"
@@ -27,14 +27,14 @@ This exists because I got fed up with coding agents constantly reintroducing reS
     Add it to the dev dependency group:
 
     ```sh
-    uv add --dev "markdown-docstrings @ git+https://github.com/jmarshrossney/markdown-docstrings"
+    uv add --dev "desphinx @ git+https://github.com/jmarshrossney/desphinx"
     ```
 
     and run it from the lint task, so commits made without the hook are caught too:
 
     ```just
     lint-check:
-      markdown-docstrings src tests
+      desphinx src tests
     ```
 
 Each finding is printed as `path:line:column: CODE summary; use instead`.
@@ -48,7 +48,7 @@ See [reference](reference.md) for the rules.
 ## Example
 
 Here we start with a module written with lots of reST ("Before").
-The terminal output ("Terminal") and the fixed module ("After `--fix`") are produced by running `markdown-docstrings --fix` when these docs are built.
+The terminal output ("Terminal") and the fixed module ("After `--fix`") are produced by running `desphinx --fix` when these docs are built.
 
 === "Before"
 

@@ -1,7 +1,7 @@
 import re
 from pathlib import Path
 
-from markdown_docstrings import RULES
+from desphinx import RULES
 
 README = Path(__file__).parent.parent / "README.md"
 ROWS = re.findall(r"^\| (RST\d{3}) \|.*\| ([^|]+) \|$", README.read_text(), re.M)

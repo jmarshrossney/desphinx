@@ -39,5 +39,5 @@ jobs:
       - uses: actions/checkout@v6
       - uses: astral-sh/setup-uv@v8.1.0
       - run: uv build
-      - run: uv run --isolated --no-project --with dist/*.whl python -c "import markdown_docstrings"
-      - run: uv run --isolated --no-project --with dist/*.whl markdown-docstrings src
+      - run: uv run --isolated --no-project --with dist/*.whl python -c "import desphinx"
+      - run: uv run --isolated --no-project --with dist/*.whl desphinx src
