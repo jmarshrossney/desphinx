@@ -1,0 +1,6 @@
+- id: markdown-docstrings
+  name: markdown-docstrings
+  description: Find reStructuredText and Sphinx markup in Python docstrings and comments.
+  entry: markdown-docstrings
+  language: python
+  types: [python]
