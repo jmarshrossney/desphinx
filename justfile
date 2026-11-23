@@ -41,8 +41,8 @@ doctest:
 docs: docs-example
   zensical build
 
-# Run `desphinx --fix` on the example module, writing the fixed module
-# and the terminal session to docs/snippets/ for the home page to include.
+# Run `desphinx`, then `desphinx --fix ...`, on the example module, writing the
+# fixed module and the terminal session to docs/snippets/ for the home page.
 [group('docs')]
 docs-example:
   #!/usr/bin/env bash
@@ -52,10 +52,14 @@ docs-example:
   trap 'rm -rf "$tmp"' EXIT
   cp "$out/before.py" "$tmp/module.py"
   cd "$tmp"
-  status=0
-  log=$(desphinx --fix module.py) || status=$?
-  printf '$ desphinx --fix module.py\n%s\n$ echo $?\n%s\n' "$log" "$status" \
-    > "$out/output.txt"
+  : > "$out/output.txt"
+  run() {
+    status=0
+    log=$("$@") || status=$?
+    printf '$ %s\n%s\n$ echo $?\n%s\n' "$*" "$log" "$status" >> "$out/output.txt"
+  }
+  run desphinx module.py
+  run desphinx --fix --unsafe-fixes --docstring-style google module.py
   cp module.py "$out/after.py"
 
 # Serve the documentation locally with live reload.
