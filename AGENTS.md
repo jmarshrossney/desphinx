@@ -6,8 +6,8 @@ Run tasks as `uv run just <task>`: the recipes call tools that are only on the P
 
 - No runtime dependencies, so the pre-commit hook installs quickly and `uvx` runs it without a project.
   Do not add typer, griffe or anything else to `[project] dependencies`.
-- `fix` rewrites only markup with exactly one Markdown equivalent.
-  Anything needing a judgement (a fence language, where to move a docstring) is reported, never rewritten.
+- `--fix` rewrites only markup whose Markdown is determined by the source, plus `--docstring-style` for field lists; `--unsafe-fixes` adds rewrites that copy a Sphinx default the source does not state (a `python` fence language).
+  Anything else is reported, never rewritten. See `docs/adr/0001-fix-tiers.md`.
 - The package checks its own `src` and `tests` (`just lint`, and the local pre-commit hook).
   Test inputs containing reST must be runtime strings, never docstrings or comments, or the self-check fails.
 

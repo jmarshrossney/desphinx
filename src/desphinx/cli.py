@@ -1,8 +1,10 @@
 """Command line interface.
 
 Run `desphinx PATH...` to report markup in the Python files under
-each path, or add `--fix` to rewrite what can be rewritten first. The exit
-status is 1 if anything was reported or rewritten, as for `ruff check --fix`.
+each path, or add `--fix` to rewrite what can be rewritten first. Add
+`--docstring-style` to also rewrite field lists, and `--unsafe-fixes` to also
+rewrite literal blocks to Python code blocks. The exit status is 1 if anything
+was reported or rewritten, as for `ruff check --fix`.
 """
 
 import argparse
@@ -55,6 +57,18 @@ def _parser() -> argparse.ArgumentParser:
         help="rewrite the markup that has one Markdown equivalent",
     )
     parser.add_argument(
+        "--unsafe-fixes",
+        action="store_true",
+        help="with --fix, also rewrite literal blocks to fenced blocks marked "
+        "python, the Sphinx default",
+    )
+    parser.add_argument(
+        "--docstring-style",
+        choices=["google", "numpy", "sphinx"],
+        help="the project's docstring style: field lists are rewritten to "
+        "google or numpy sections by --fix, and not reported for sphinx",
+    )
+    parser.add_argument(
         "--exclude",
         action="append",
         default=[],
@@ -73,17 +87,25 @@ def main(argv: Sequence[str] | None = None) -> int:
     Returns:
         The exit status: 0 if nothing was found or fixed, otherwise 1.
     """
-    args = _parser().parse_args(argv)
+    parser = _parser()
+    args = parser.parse_args(argv)
+    if args.unsafe_fixes and not args.fix:
+        parser.error("--unsafe-fixes requires --fix")
+    style = args.docstring_style
     failed = False
     for path in _python_files(args.paths, args.exclude):
         source = path.read_text(encoding="utf-8")
         try:
-            if args.fix and (fixed := fix(source)) != source:
+            if (
+                args.fix
+                and (fixed := fix(source, style=style, unsafe=args.unsafe_fixes))
+                != source
+            ):
                 path.write_text(fixed, encoding="utf-8")
                 print(f"{path}: fixed")
                 source = fixed
                 failed = True
-            findings = check(source)
+            findings = check(source, style=style)
         except SyntaxError as e:
             print(f"{path}: skipped, not valid Python ({e.msg})", file=sys.stderr)
             continue

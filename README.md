@@ -15,7 +15,7 @@ Please see the [documentation](https://jmarshrossney.github.io/desphinx) for use
   rev: <tag or commit>
   hooks:
     - id: desphinx
-      args: [--fix]
+      args: [--fix, --docstring-style, google]
 ```
 
 ### Command line
@@ -47,18 +47,26 @@ Directories are searched recursively, skipping hidden directories and `__pycache
 
 `--fix` rewrites the markup that has a clear Markdown equivalent and reports the rest, with suggested replacements.
 
+- `--docstring-style google|numpy` lets `--fix` rewrite Sphinx field lists into that style's sections.
+  With `numpy`, a field list followed by more prose is reported instead, since a numpy section runs to the next section header.
+  `--docstring-style sphinx` stops field lists being reported at all, for projects that render them with mkdocstrings' Sphinx parser.
+- `--unsafe-fixes` also rewrites literal blocks, and code directives that name no language, to fenced blocks marked `python`.
+  That is Sphinx's default highlighting, but nothing in the docstring says the code is Python.
+
+Admonitions are written as `!!! note`, which needs the `admonition` Markdown extension.
+
 ## Rules
 
 <!-- --8<-- [start:rules] -->
 | Code | Catches | Where | `--fix` |
 |---|---|---|---|
 | RST001 | Sphinx roles, e.g. `:func:` followed by a backticked name | docstrings, comments | to inline code |
-| RST002 | reST directives, e.g. `.. warning::` | docstrings | no |
-| RST003 | reST literal blocks: a line ending in `::` | docstrings | no |
+| RST002 | reST directives, e.g. `.. warning::` | docstrings | admonitions to `!!!`, code blocks naming a language to fences |
+| RST003 | reST literal blocks: a line ending in `::` | docstrings | with `--unsafe-fixes`, to a `python` fence |
 | RST004 | reST double-backtick literals | docstrings, comments | to single backticks |
 | RST005 | reST hyperlinks: backticked `text <url>` followed by `_` | docstrings, comments | to `[text](url)` |
-| RST006 | Sphinx field lists, e.g. `:param x:` | docstrings | no |
-| RST007 | Sphinx attribute comments, `#:` | comments | private names only, to `#` |
+| RST006 | Sphinx field lists, e.g. `:param x:` | docstrings | with `--docstring-style`, to its sections |
+| RST007 | Sphinx attribute comments, `#:` | comments | to a docstring below the assignment |
 <!-- --8<-- [end:rules] -->
 
 A docstring is any statement that is a bare string literal, so attribute docstrings are included.

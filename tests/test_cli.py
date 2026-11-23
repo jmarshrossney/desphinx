@@ -76,3 +76,27 @@ def test_runs_as_a_module(tree):
 
 def test_own_source_is_clean():
     assert main(["src", "tests"]) == 0
+
+
+def test_unsafe_fixes_requires_fix(tree):
+    with pytest.raises(SystemExit) as exc:
+        main(["--unsafe-fixes", str(tree)])
+    assert exc.value.code == 2
+
+
+def test_fix_flags_pass_through(tmp_path, capsys):
+    path = tmp_path / "m.py"
+    path.write_text('"""Doc.\n\n:param x: The x.\n\nExample::\n\n    f(x)\n"""\n')
+    args = ["--fix", "--unsafe-fixes", "--docstring-style", "google", str(path)]
+    assert main(args) == 1
+    assert path.read_text() == (
+        '"""Doc.\n\nArgs:\n    x: The x.\n\nExample:\n\n```python\nf(x)\n```\n"""\n'
+    )
+    assert main(args) == 0
+
+
+def test_sphinx_style_does_not_report_field_lists(tmp_path):
+    path = tmp_path / "m.py"
+    path.write_text('"""Doc.\n\n:param x: The x.\n"""\n')
+    assert main([str(path)]) == 1
+    assert main(["--docstring-style", "sphinx", str(path)]) == 0
