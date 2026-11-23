@@ -4,7 +4,7 @@ build-backend = "uv_build"
 
 [project]
 name = "desphinx"
-version = "0.1.0.dev0"
+version = "0.1.0"
 description = "Catch reStructuredText and Sphinx markup in Python docstrings and comments, for projects documented with Markdown."
 authors = [
     { name = "Joe Marsh Rossney", email = "17361029+jmarshrossney@users.noreply.github.com" }
